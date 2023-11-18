@@ -1,23 +1,25 @@
 # SubSimplex
 
-Simply convert subtitles to WebVTT. **WIP** x **POC**. \
-_#serverles #nodejs #express #webcomponent #ffmpeg_
+A simple, no-nonsense tool to convert subtitles for the web (WebVTT).
+**_WIP_** x **_POC_**. \
+_#serverless #nodejs #express #webcomponent #ffmpeg_
 
 <details>
 <summary>Tasteless intro</summary>
 
 Lemme start by admitting that I have cancer.
 No, not IRL, but the type that lets you stay alive and suffer for at least 40 or 50 more years.
+
 IDK why I keep procrastinating, getting sidetracked, and never getting anything done.
 
-As Lady Amalthea (A.K.A. The Last Unicorn) would say, <q lang="fr">Je sens ce corps mourir !</q>, which is French for "I can feel this whole body dying all around me!"...
+As Lady Amalthea (The Last Unicorn) would say, <q lang="fr">Je sens ce corps mourir !</q>, which is French for <q>I can feel this whole body dying all around me!</q>...
 </details>
 
-Suppose you have a video or movie like The Last Unicorn (obtain through legitimate means like buying the DVD, obvio).
-You want to embed it in a web page (say, PeerParty) in addition to the French subtitles file (e.g., `unicorn.fr.srt`).
-Unfortunately, the web support only WebVTT (`*.vtt`).
+Suppose you have a video or movie like The Last Unicorn (obtained through legitimate means like buying the DVD, obvio). \
+You want to embed it in a web page (say, PeerParty) in addition to the French subtitles file (e.g., `unicorn.fr.srt`). \
+Unfortunately, the web supports only WebVTT (`*.vtt`).
 
-This project is my attempt at coming up with a no-nonsense way to convert and view subtitles on the web.
+This project is my attempt at coming up with a no-nonsense solution to convert and view subtitles on the web.
 
 - [ ] Used by [PeerParty](https://github.com/djalilhebal/peer-party).
 
@@ -30,6 +32,7 @@ This project is my attempt at coming up with a no-nonsense way to convert and vi
 
 <video controls>
     <source src="sintel-1280-stereo.mp4" type="video/mp4" />
+    <!-- <track default kind="subtitles" srclang="fr" src="sintel_fr.srt" /> -->
     <subsimplex-track default kind="subtitles" srclang="fr" src="sintel_fr.srt" />
 </video>
 ```
@@ -37,7 +40,7 @@ This project is my attempt at coming up with a no-nonsense way to convert and vi
 Output:
 ![Screenshot of video with French subtitles](./demo-2023-11-17.jpg)
 
-That assumes you are running the server locally:
+The demo assumes that the API server is running locally:
 ```sh
 cd server
 npm start
@@ -120,7 +123,9 @@ Design considerations:
 
 - No-nonsense.
 
-- It should be a straightforward replacement for `<track>`
+- Lightweight.
+
+- It should be a straightforward replacement for `<track>`.
 
 - Should work well with React and other libraries/frameworks.
 

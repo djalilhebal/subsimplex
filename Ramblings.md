@@ -1,11 +1,39 @@
 # SubSimplex Ramblings
 
+The main idea has always been to "just use FFmpeg" (since there doesn't seem to be any maintained alternative).
 
-## Web component
+But when and where?
+
+Where?
+- Client side: Too big.
+- Server side: Depends on a server.
+
+When?
+- I would do it (manually) beforehand using the CLI `ffmpeg -i x.srt x.vtt`.
+- But for general use, I guess we need to do it when the user asks for it.
+
+
+## FFmpeg versions
+
+- ffmpeg.wasm https://github.com/ffmpegwasm/ffmpeg.wasm
+    * 2023-11-XX Checked
+    * ffmpeg-core size is 31MB.
+    * ffmpeg version 5.1.3, built with emcc
+    * `ffmpeg -i sintel_en.srt sintel_en--ffmpegwasm.vtt` worked.
+        * Generates the expected output (`diff -q sintel_en--ffmpegwasm.vtt sintel_en--expected.vtt`).
+    * `ffmpeg -i sintel_fr.srt sintel_fr--ffmpegwasm.vtt` failed. Not unexpected since the file's magic number is weird.
+    Specifying the input format lets it handle it correctly (`ffmpeg -f srt -i sintel_fr.srt sintel_fr.vtt`).
+
+- `@ffmpeg-installer`'s `/win32-x64/ffmpeg.exe`
+    * 2023-11-XX Checked
+    * ffmpeg version N-92722-gf22fcd4483, built with gcc 8.2.1
+
+
+## Web components
 
 ### Compatibility with React
 
-React support both types:
+React supports both types of Web Components:
 - Autonomous Custom Element: `<my-whatever>` like `<subsimplex-track>`
 - Customized Built-In Element: `<whatever is="my-whatever">` like `<track is="subsimplex-track">`
 
@@ -20,17 +48,9 @@ If you need to support Safari, use some polyfill like
 [`@ungap/custom-elements`](https://github.com/ungap/custom-elements).
 
 
-## Usage
+## Testing
 
-```diff
-+<script src="subsimplex.js"></script>
-<video src="film.mp4">
--    <track type="subtitles" src="film.srt" />
-+    <SubSimplexTrack src="film.srt" />
-```
-
-Testing:
-Expect the video to contain a subtitles track
+- [ ] Expect the video to contain a subtitles track. \
 But when? after the video is loaded? 10 seconds of page load? 5 seconds since the video starts playing?
 ```js
 const vid = document.querySelector('video');
@@ -88,10 +108,10 @@ In `ffmpeg -codecs`, we are looking for lines that match `/^D.S/` (meaning, can 
 
 - **Remember:**
 We should not simply filter requests based on a simplistic content-type check. \
-Rejecting non-"text/*" requests is bad because:
-    - .vtt is "text/vtt"
-    - .srt is "application/x-subrip"
-    - Not sure about the content-type of other supported formats.
+Rejecting non-"text/*" requests is a horrible idea because:
+    - `.vtt` is "text/vtt"
+    - `.srt` is "application/x-subrip"
+    - Not sure about the media types of other supported formats.
 
 
 ## Related projects
