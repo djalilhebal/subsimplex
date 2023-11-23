@@ -9,8 +9,19 @@
 
 body {
     background: black;
+    min-height: 100vh;
 
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+video {
+    border: 3px solid rgb(255 255 255 / 25%);
 }

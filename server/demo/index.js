@@ -4,6 +4,16 @@
  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track
  */
 class SubSimplexTrack extends HTMLElement {
+
+    /**
+     * The default API path.
+     * It assume the API and demo are on the same server/host.
+     * 
+     * @remarks
+     * - Must not end with a dash.
+     */
+    static defaultApi = '/api/v0' ; //getApi();
+
     static get observedAttributes() {
         return ['src'];
     }
@@ -81,8 +91,6 @@ class SubSimplexTrack extends HTMLElement {
         this.appendingChildApproach();
     }
 
-    static defaultApi = 'http://localhost:8084/api';
-
     /**
      * @private
      */
@@ -123,6 +131,15 @@ class SubSimplexTrack extends HTMLElement {
         return true;
     }
 
+}
+
+function getApi() {
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        return 'http://localhost:3000/api/v0';
+    } else {
+        // Assume the API is on the same host.
+        return '/api/v0';
+    }
 }
 
 customElements.define('subsimplex-track', SubSimplexTrack);

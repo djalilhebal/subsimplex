@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 
-app.post('/api/convert-to-vtt/:filename', (req, res) => {
+app.post('/api/v0/convert-to-vtt/:filename', (req, res) => {
     res.setHeader('Content-Type', VTT_CONTENT_TYPE);
     const inputFilename = req.params.filename;
     const inputStream = req;

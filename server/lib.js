@@ -2,15 +2,17 @@ import * as path from 'path';
 import { path as ffmpegPath } from '@ffmpeg-installer/ffmpeg';
 import ffmpeg from 'fluent-ffmpeg';
 
+//console.debug({ ffmpegPath });
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-console.debug({ ffmpegPath });
-
 /**
- * WebVTT format as accepted by ffmpeg.
+ * WebVTT's format as accepted by ffmpeg.
  */
 const VTT_FORMAT = 'webvtt';
 
+/**
+ * WebVTT's media type.
+ */
 const VTT_CONTENT_TYPE = 'text/vtt';
 
 /**
@@ -23,10 +25,11 @@ const VTT_CONTENT_TYPE = 'text/vtt';
  */
 function convertToVtt({ inputFilename, inputStream, outputStream }) {
     const inputFormat = path.extname(inputFilename).substring(1);
+
     const command = ffmpeg();
     command.input(inputStream);
 
-    // TBD: Optional?
+    // TBD: Can it be optional or automatically inferred?
     if (inputFormat) {
         command.inputFormat(inputFormat);
     }

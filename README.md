@@ -7,7 +7,7 @@ _#serverless #nodejs #express #webcomponent #ffmpeg_
 <details>
 <summary>Tasteless intro</summary>
 
-Lemme start by admitting that I have cancer.
+Lemme start by admitting that I have cancer.  
 No, not IRL, but the type that lets you stay alive and suffer for at least 40 or 50 more years.
 
 IDK why I keep procrastinating, getting sidetracked, and never getting anything done.
@@ -59,7 +59,9 @@ npx serve
     * `fluent-ffmpeg`
     * https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
 
-- [x] Express ~~or Koa~~
+- [x] Express
+
+- [ ] Vercel Serverless Functions
 
 - [ ] `supertest` and Mocha for testing
 
@@ -67,10 +69,18 @@ npx serve
 
 - [ ] React
 
-- [ ] Vercel Serverless Functions
 
+## Usage / Testing
 
-## Usage
+Tested with:
+- Edge and Chrome v119
+- Node v21.2.0 (64-bit)
+- Vercel CLI 32.5.6\*
+    * Dev fails with Node v20 (LTS).
+    * Dev feails with Node v21.2.0 (latest). It somehow installed `undici@5.26.5` even though the latest version of Node should've included `undici@5.27.0`.
+    Uninstalled `vercel`, removed npm cache (`npm cache clean --force`), this doesn't fix it.
+    * \* Manually replaced `vercel/node_modules/undici` with the latest version. Works.
+    See https://github.com/vercel/vercel/issues/10835#issuecomment-1824020337
 
 ### Client
 
@@ -90,11 +100,9 @@ Just import the Web Component and use it as you would use `<track>`.
 
 ### Server
 
-`server/`
+`server/` contains the Express server (`server.js`) and serverless function (`api/v0/*`).
 
-Or "serverless".
-
-Make sure you have `ffmpeg` installed on your serverless image(?).
+Ensuring `ffmpeg` is installed on your system or serverless image(?).
 
 In our case, we are using Vercel:
 
@@ -103,7 +111,7 @@ In our case, we are using Vercel:
 - [x] ~~ffmpeg.wasm~~ https://github.com/ffmpegwasm/ffmpeg.wasm
     + As of 2023-11-05, its FAQ states that the project does not work with nodejs.
 
-**Idea 2**: Install it as a node package.
+**Idea 2**: Download the binary using npm.
 
 - [ ] https://github.com/kribblo/node-ffmpeg-installer
     * [x] Tested locally on Windows 10.
@@ -114,7 +122,16 @@ In our case, we are using Vercel:
 - [x] [Build image | Vercel Docs](https://vercel.com/docs/deployments/build-image)
     * TLDR: Vercel does not include `ffmpeg`. Gotta install it ourselves.
 
-- [ ] [FFMPEG Install on EC2 - Amazon Linux - Server Fault](https://serverfault.com/questions/374912)
+- [ ] [FFMPEG Install on EC2 - Amazon Linux | Server Fault](https://serverfault.com/questions/374912)
+
+
+## Serverless function
+
+Running locally:
+```sh
+cd server
+vercel dev
+```
 
 
 ## Design
@@ -125,7 +142,7 @@ Design considerations:
 
 - Lightweight.
 
-- It should be a straightforward replacement for `<track>`.
+- Should be a straightforward replacement for `<track>`.
 
 - Should work well with React and other libraries/frameworks.
 
