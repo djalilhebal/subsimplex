@@ -103,6 +103,30 @@ Rejecting non-"text/*" requests is a horrible idea because:
     - `.srt` is "application/x-subrip"
     - Not sure about the media types of other formats.
 
+
+### Ensuring `ffmpeg` is installed on your system or serverless image
+
+In our case, we are using Vercel:
+
+**Idea 1**: Use a platform-independent version of ffmpeg.
+
+- [x] ~~ffmpeg.wasm~~ https://github.com/ffmpegwasm/ffmpeg.wasm
+    + As of 2023-11-05, its FAQ states that the project does not work with nodejs.
+
+**Idea 2**: Download the binary using npm.
+
+- [ ] https://github.com/kribblo/node-ffmpeg-installer
+    * [x] Tested locally on Windows 10.
+    * [x] 2023-11-23 ~~Test on EC2 (local VM or Vercel)~~ Tested on Vercel. It works.
+
+**Idea 3**: Install it "manually":
+
+- [x] [Build image | Vercel Docs](https://vercel.com/docs/deployments/build-image)
+    * TLDR: Vercel does not include `ffmpeg`. Gotta install it ourselves.
+
+- [ ] [FFMPEG Install on EC2 - Amazon Linux | Server Fault](https://serverfault.com/questions/374912)
+
+
 ### FFmpeg versions
 
 - ffmpeg.wasm https://github.com/ffmpegwasm/ffmpeg.wasm

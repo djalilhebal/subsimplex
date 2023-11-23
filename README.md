@@ -2,7 +2,7 @@
 
 A simple, no-nonsense tool to convert subtitles for the web (WebVTT).
 **_WIP_** x **_POC_**. \
-_#serverless #nodejs #express #webcomponent #ffmpeg_
+_#nodejs #express #webcomponent #ffmpeg #serverless_
 
 <details>
 <summary>Tasteless intro</summary>
@@ -12,16 +12,18 @@ No, not IRL, but the type that lets you stay alive and suffer for at least 40 or
 
 IDK why I keep procrastinating, getting sidetracked, and never getting anything done.
 
-As Lady Amalthea (The Last Unicorn) would say, <q lang="fr">Je sens ce corps mourir !</q>, which is French for <q>I can feel this whole body dying all around me!</q>...
+As Lady Amalthea (The Last Unicorn) would say, <q lang="fr">Je sens ce corps mourir !</q>, which is French but less dramatic translation of <q>I can feel this whole body dying all around me!</q>...
 </details>
 
 Suppose you have a video or movie like The Last Unicorn (obtained through legitimate means like buying the DVD, obvio). \
-You want to embed it in a web page (say, PeerParty) in addition to the French subtitles file (e.g., `unicorn.fr.srt`). \
+You want to embed it in a web page or app (say, PeerParty) in addition to the French subtitles file (e.g., `unicorn.fr.srt`). \
 Unfortunately, the web supports only WebVTT (`*.vtt`).
 
 This project is my attempt at coming up with a no-nonsense solution to convert and view subtitles on the web.
 
-- [ ] Used by [PeerParty](https://github.com/djalilhebal/peer-party).
+- [Live demo](https://subsimplex.vercel.app/demo/).
+
+- [ ] Created for and used by [PeerParty](https://github.com/djalilhebal/peer-party).
 
 
 ## Demo
@@ -48,7 +50,7 @@ npm start
 
 As for the static server for demo:
 ```sh
-cd demo
+cd server/demo
 npx serve
 ```
 
@@ -61,7 +63,7 @@ npx serve
 
 - [x] Express
 
-- [ ] Vercel Serverless Functions
+- [x] Vercel Serverless Functions
 
 - [ ] `supertest` and Mocha for testing
 
@@ -73,8 +75,11 @@ npx serve
 ## Usage / Testing
 
 Tested with:
+
 - Edge and Chrome v119
+
 - Node v21.2.0 (64-bit)
+
 - Vercel CLI 32.5.6\*
     * Dev fails with Node v20 (LTS).
     * Dev feails with Node v21.2.0 (latest). It somehow installed `undici@5.26.5` even though the latest version of Node should've included `undici@5.27.0`.
@@ -88,8 +93,6 @@ Tested with:
 
 Just import the Web Component and use it as you would use `<track>`.
 ```html
-<script src="dist/SubSimplexTrack.js"></script>
-
 <video controls src="film.mp4">
     <!--
         <track src="film_fr.srt" />
@@ -100,38 +103,18 @@ Just import the Web Component and use it as you would use `<track>`.
 
 ### Server
 
-`server/` contains the Express server (`server.js`) and serverless function (`api/v0/*`).
-
-Ensuring `ffmpeg` is installed on your system or serverless image(?).
-
-In our case, we are using Vercel:
-
-**Idea 1**: Use a platform-independent version of ffmpeg.
-
-- [x] ~~ffmpeg.wasm~~ https://github.com/ffmpegwasm/ffmpeg.wasm
-    + As of 2023-11-05, its FAQ states that the project does not work with nodejs.
-
-**Idea 2**: Download the binary using npm.
-
-- [ ] https://github.com/kribblo/node-ffmpeg-installer
-    * [x] Tested locally on Windows 10.
-    * [ ] Test on EC2 (local VM or Vercel).
-
-**Idea 3**: Install it "manually":
-
-- [x] [Build image | Vercel Docs](https://vercel.com/docs/deployments/build-image)
-    * TLDR: Vercel does not include `ffmpeg`. Gotta install it ourselves.
-
-- [ ] [FFMPEG Install on EC2 - Amazon Linux | Server Fault](https://serverfault.com/questions/374912)
+`server/` contains the Express server (`app.js`) and serverless function (`api/v0/*`).
 
 
-## Serverless function
+### Serverless function
 
 Running locally:
 ```sh
 cd server
 vercel dev
 ```
+
+Now visit http://localhost:3000/demo/
 
 
 ## Design
@@ -172,7 +155,7 @@ Server:
 ```
 
 
-## Ramblings
+### Ramblings
 
 More [Ramblings](./Ramblings.md)?
 

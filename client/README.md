@@ -1,1 +1,3 @@
-The web component is `demo/index.js`
+# Consumers / Components
+
+WIP.
