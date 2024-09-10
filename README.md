@@ -58,8 +58,8 @@ npx serve
 ## Technologies used
 
 - [x] FFmpeg (https://ffmpeg.org/)
-    * `fluent-ffmpeg`
-    * https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
+    * `fluent-ffmpeg` https://github.com/fluent-ffmpeg/node-fluent-ffmpeg
+    * `@ffmpeg-installer/ffmpeg`
 
 - [x] Express
 
@@ -82,8 +82,8 @@ Tested with:
 
 - Vercel CLI 32.5.6\*
     * Dev fails with Node v20 (LTS).
-    * Dev feails with Node v21.2.0 (latest). It somehow installed `undici@5.26.5` even though the latest version of Node should've included `undici@5.27.0`.
-    Uninstalled `vercel`, removed npm cache (`npm cache clean --force`), this doesn't fix it.
+    * Dev fails with Node v21.2.0 (latest). It somehow installed `undici@5.26.5` even though the latest version of Node should've included `undici@5.27.0`.  
+    I uninstalled `vercel`, removed npm cache (`npm cache clean --force`), this doesn't fix it.
     * \* Manually replaced `vercel/node_modules/undici` with the latest version. Works.
     See https://github.com/vercel/vercel/issues/10835#issuecomment-1824020337
 

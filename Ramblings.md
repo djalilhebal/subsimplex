@@ -6,13 +6,23 @@ But when and where?
 
 Where?
 - Client side: Too big.
-- Server side: Depends on a server.
+- Server side: Having to depend on a server.
 
 When?
-- I would do it (manually) beforehand using the CLI `ffmpeg -i x.srt x.vtt`.
-- But for general use, I guess we need to do it when the user asks for it. \
+- Usually, I would do it (manually) beforehand using the CLI `ffmpeg -i x.srt x.vtt`.
+- But for general use, I guess we need to do it (automatically) when the user asks for it. \
 But whene exactly? As soon as the src is set? or wait for the browser to call it?
 Like, do we set it as a link to SubSimplex API or do we fetch the WebVTT file and set the src to an Object URL?
+
+
+#subsimplex
+- `fluent-ffmpeg` accepts `ReadableStream`s as input.
+    - We can either use req (`http.IncomingMessage`) directly.
+        * Current approach.
+    - Or we can consume the body and create a new ReadableStream.
+        * Better approach?
+        * [ ] [Node.js: How to read a stream into a buffer? | Stack Overflow](https://stackoverflow.com/questions/14269233/)
+        * [ ] [Converting a Buffer into a ReadableStream in Node.js | Stack Overflow](https://stackoverflow.com/questions/13230487/)
 
 
 ## Web components
@@ -130,7 +140,7 @@ In our case, we are using Vercel:
 ### FFmpeg versions
 
 - ffmpeg.wasm https://github.com/ffmpegwasm/ffmpeg.wasm
-    * 2023-11-XX Checked
+    * 2023-11-XX Checked.
     * ffmpeg-core size is 31MB.
     * ffmpeg version 5.1.3, built with emcc
     * `ffmpeg -i sintel_en.srt sintel_en--ffmpegwasm.vtt` worked.
@@ -143,9 +153,28 @@ In our case, we are using Vercel:
     * ffmpeg version N-92722-gf22fcd4483, built with gcc 8.2.1
 
 
-## Related projects
+## Reads / Further Reading / Resources
+
+- [§ 4.8.11.11.3 Sourcing out-of-band text tracks | HTML Standard](https://html.spec.whatwg.org/multipage/media.html#sourcing-out-of-band-text-tracks)
+    * If I understand the algorithm correctly, `$track.src` can be empty, and the resource it refers to will be fetched and parsed whenever `src` changes.
+
+- [No video.removeTextTrack method · Issue #1921 · whatwg/html](https://github.com/whatwg/html/issues/1921)
+    * No `video.removeTextTrack` since 2015.
+    * 2023-11-XX Still nothing.
+
+- [Dynamically adding text tracks to HTML5 video | Ian Devlin](https://iandevlin.com/blog/2015/02/javascript/dynamically-adding-text-tracks-to-html5-video/)
+    * By Ian Devlin, 2015.
+    * KAITO: He mentioned different approaches, and commented on the absence of a `removeTextTrack` method.
+    * "Simply setting track.src = "captions/sintel-en.vtt" doesn’t appear to work on any browser that I tested, the text tracks are never actually loaded."
+    Understandable confusion. `HTMLTrackElement` has a src attribute, while `TextTrack` does not.
+
+### Related projects
 
 - https://github.com/vidstack/media-captions
+
+- https://github.com/mozilla/vtt.js
+    * "A JavaScript implementation of the WebVTT specification"
+    * KAITO: Remember, this exists.
 
 ---
 
